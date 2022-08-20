@@ -2,15 +2,20 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+
 
 class TestNewUser:
     driver = ''
 
     def setup_method(self):
-        self.driver = webdriver.Chrome(executable_path='/Users/Andris/.wdm/drivers/chromedriver/win32/103.0.5060/chromedriver.exe')
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.implicitly_wait(5)
         self.driver.get('https://demo.nopcommerce.com/')
         self.driver.maximize_window()
+       
 
     def test_new_user(self):
         self.driver.find_element(By.CSS_SELECTOR, '.ico-register').click()
@@ -24,7 +29,7 @@ class TestNewUser:
         self.driver.find_element(By.NAME, 'DateOfBirthYear')
         self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[77]').click()
 
-        self.driver.find_element(By.ID, 'Email').send_keys('test20@test.com')
+        self.driver.find_element(By.ID, 'Email').send_keys('test21@test.com')
 
         self.driver.find_element(By.ID, 'Password').send_keys('secretpassword')
         self.driver.find_element(By.ID, 'ConfirmPassword').send_keys('secretpassword')
@@ -52,7 +57,7 @@ class TestNewUser:
         self.driver.find_element(By.NAME, 'DateOfBirthYear')
         self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[77]').click()
 
-        self.driver.find_element(By.ID, 'Email').send_keys('test20@test.com')
+        self.driver.find_element(By.ID, 'Email').send_keys('test21@test.com')
 
         self.driver.find_element(By.ID, 'Password').send_keys('secretpassword')
         self.driver.find_element(By.ID, 'ConfirmPassword').send_keys('secretpassword')
