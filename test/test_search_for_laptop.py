@@ -30,11 +30,7 @@ class TestSearchForLaptop:
         needed_laptop= self.driver.find_element(By.CSS_SELECTOR, '.button-2.product-box-add-to-cart-button')
         page_move.click(needed_laptop).perform()
 
-        self.driver.implicitly_wait(10)
-        #self.driver.find_element(By.CSS_SELECTOR, '#attribute-option-7').click()
-        #time.sleep(2)
-        
-        #self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[1]/div/div[2]/h2/a').click()
+
         time.sleep(3)      
 
 

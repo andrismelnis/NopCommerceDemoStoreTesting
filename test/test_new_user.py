@@ -3,7 +3,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+from webpage.website_actions import successful_login
 from webpage.website_actions import new_user_registration
+
 
 
 
@@ -17,7 +19,7 @@ class TestNewUser:
         self.driver.maximize_window()
        
 
-    # New user registration
+# New user registration
 
     def test_new_user(self):
         new_user_registration(self)    
@@ -26,8 +28,7 @@ class TestNewUser:
         assert actual_text == expected_text, f"Expected text: '{expected_text}', but actual text: '{actual_text}'"
 
 
-
-    # New user registratioun with already existing e-mail
+# New user registratioun with already existing e-mail
 
     def test_new_user_with_existing_email(self):
         new_user_registration(self)
@@ -38,14 +39,11 @@ class TestNewUser:
 # Successfuly login in account
 
     def test_successful_login(self):
-        self.driver.find_element(By.CSS_SELECTOR, '.ico-login').click()
-        self.driver.find_element(By.ID, 'Email').send_keys('test@test.com')
-        self.driver.find_element(By.ID, 'Password').send_keys('secretpassword')
-        self.driver.find_element(By.CSS_SELECTOR, '.button-1.login-button').click()
-
+        successful_login(self)
         actual_text = self.driver.find_element(By.CSS_SELECTOR, '.ico-account').text
         expected_text = 'My account'
         assert actual_text == expected_text, f"Expected text: '{expected_text}', but actual text: '{actual_text}'"
+
 
 # Fail to login in account - wrong email
 
