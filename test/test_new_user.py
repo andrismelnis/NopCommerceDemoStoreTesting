@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
-
+from webpage.website_actions import new_user_registration
 
 
 
@@ -17,68 +17,37 @@ class TestNewUser:
         self.driver.maximize_window()
        
 
+    # New user registration
+
     def test_new_user(self):
-        self.driver.find_element(By.CSS_SELECTOR, '.ico-register').click()
-        self.driver.find_element(By.ID, 'gender-male').click()
-        self.driver.find_element(By.ID, 'FirstName').send_keys('John')
-        self.driver.find_element(By.ID, 'LastName').send_keys('Doe')
-        self.driver.find_element(By.NAME, 'DateOfBirthDay').click()
-        self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[1]/option[11]').click()
-        self.driver.find_element(By.NAME, 'DateOfBirthMonth').click()
-        self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[2]/option[10]').click()
-        self.driver.find_element(By.NAME, 'DateOfBirthYear')
-        self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[77]').click()
-
-        self.driver.find_element(By.ID, 'Email').send_keys('test21@test.com')
-
-        self.driver.find_element(By.ID, 'Password').send_keys('secretpassword')
-        self.driver.find_element(By.ID, 'ConfirmPassword').send_keys('secretpassword')
-
-        self.driver.find_element(By.ID, 'register-button').click()
-
-    
-
+        new_user_registration(self)    
         actual_text = self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]').text
         expected_text = 'Your registration completed'
         assert actual_text == expected_text, f"Expected text: '{expected_text}', but actual text: '{actual_text}'"
 
 
 
+    # New user registratioun with already existing e-mail
 
     def test_new_user_with_existing_email(self):
-        self.driver.find_element(By.CSS_SELECTOR, '.ico-register').click()
-        self.driver.find_element(By.ID, 'gender-male').click()
-        self.driver.find_element(By.ID, 'FirstName').send_keys('John')
-        self.driver.find_element(By.ID, 'LastName').send_keys('Doe')
-        self.driver.find_element(By.NAME, 'DateOfBirthDay').click()
-        self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[1]/option[11]').click()
-        self.driver.find_element(By.NAME, 'DateOfBirthMonth').click()
-        self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[2]/option[10]').click()
-        self.driver.find_element(By.NAME, 'DateOfBirthYear')
-        self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[77]').click()
-
-        self.driver.find_element(By.ID, 'Email').send_keys('test21@test.com')
-
-        self.driver.find_element(By.ID, 'Password').send_keys('secretpassword')
-        self.driver.find_element(By.ID, 'ConfirmPassword').send_keys('secretpassword')
-
-        self.driver.find_element(By.ID, 'register-button').click()
-
-    
-
+        new_user_registration(self)
         actual_text = self.driver.find_element(By.CSS_SELECTOR, '.message-error.validation-summary-errors').text
         expected_text = 'The specified email already exists'
         assert actual_text == expected_text, f"Expected text: '{expected_text}', but actual text: '{actual_text}'"
 
+# Successfuly login in account
+
     def test_successful_login(self):
         self.driver.find_element(By.CSS_SELECTOR, '.ico-login').click()
-        self.driver.find_element(By.ID, 'Email').send_keys('test20@test.com')
+        self.driver.find_element(By.ID, 'Email').send_keys('test@test.com')
         self.driver.find_element(By.ID, 'Password').send_keys('secretpassword')
         self.driver.find_element(By.CSS_SELECTOR, '.button-1.login-button').click()
 
         actual_text = self.driver.find_element(By.CSS_SELECTOR, '.ico-account').text
         expected_text = 'My account'
         assert actual_text == expected_text, f"Expected text: '{expected_text}', but actual text: '{actual_text}'"
+
+# Fail to login in account - wrong email
 
     def test_failed_login_wrong_user_name(self):
         self.driver.find_element(By.CSS_SELECTOR, '.ico-login').click()
@@ -91,7 +60,7 @@ class TestNewUser:
         assert actual_link == expected_link, f"Expected text: '{expected_link}', but actual text: '{actual_link}'"
 
 
-    
+# Fail to login to account - wrong password    
 
     def test_failed_login_wrong_password(self):
         self.driver.find_element(By.CSS_SELECTOR, '.ico-login').click()
@@ -102,6 +71,10 @@ class TestNewUser:
         actual_link = self.driver.current_url
         expected_link = 'https://demo.nopcommerce.com/login?returnurl=%2F'
         assert actual_link == expected_link, f"Expected text: '{expected_link}', but actual text: '{actual_link}'"
+
+
+
+# Fail to login in account - wrong email and password
 
     def test_failed_login_wrong_user_name_and_password(self):
         self.driver.find_element(By.CSS_SELECTOR, '.ico-login').click()
@@ -117,4 +90,4 @@ class TestNewUser:
         self.driver.quit()
 
 if __name__ == '__main__':
-    pytest.main()
+   pytest.main()
