@@ -22,6 +22,7 @@ class TestNewUser:
 # New user registration
 
     def test_new_user(self):
+        self.driver.find_element(By.CSS_SELECTOR, '.ico-register').click()
         new_user_registration(self)    
         actual_text = self.driver.find_element(By.XPATH, '/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]').text
         expected_text = 'Your registration completed'
@@ -31,6 +32,7 @@ class TestNewUser:
 # New user registratioun with already existing e-mail
 
     def test_new_user_with_existing_email(self):
+        self.driver.find_element(By.CSS_SELECTOR, '.ico-register').click()
         new_user_registration(self)
         actual_text = self.driver.find_element(By.CSS_SELECTOR, '.message-error.validation-summary-errors').text
         expected_text = 'The specified email already exists'
@@ -39,6 +41,7 @@ class TestNewUser:
 # Successfuly login in account
 
     def test_successful_login(self):
+        self.driver.find_element(By.CSS_SELECTOR, '.ico-register').click()
         successful_login(self)
         actual_text = self.driver.find_element(By.CSS_SELECTOR, '.ico-account').text
         expected_text = 'My account'
